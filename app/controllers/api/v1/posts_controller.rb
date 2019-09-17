@@ -11,7 +11,11 @@ class Api::V1::PostsController < ApplicationController
 
   def create
     newpost = Post.create(post_params)
-    newpost.save ? render json: newpost : render json: { message: newpost.errors }, status: 400
+    if newpost.save
+      render json: newpost
+    else
+      render json: { message: newpost.errors }, status: 400
+    end
   end
 
   def update

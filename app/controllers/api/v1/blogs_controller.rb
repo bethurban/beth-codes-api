@@ -10,7 +10,11 @@ class Api::V1::BlogsController < ApplicationController
 
   def create
     newblog = Blog.create(blog_params)
-    newblog.save ? render json: newblog : render json: { message: newblog.errors }, status: 400
+    if newblog.save
+      render json: newblog
+    else
+      render json: { message: newblog.errors }, status: 400
+    end
   end
 
   def update
